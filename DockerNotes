@@ -1,0 +1,32 @@
+What is Selenium Grid?
+Selenium Grid distributes the automation tests across different machines and promotes cross browser & cross platform testing.
+Hub and Node - View Here
+Selenium Grid on Docker Containers
+We need to configure Hub and multiple Nodes as Docker Containers in a single machine, using the below commands
+docker network create grid 
+Refer commands here
+Go to docker hub, search for 'selenium/hub' and you will find the below command:
+docker pull selenium/hub:latest
+docker images
+Go to docker hub, search for 'selenium/node-chrome' and you will find the below command:
+docker pull selenium/node-chrome:latest
+docker images
+Go to docker hub, search for 'selenium/node-firefox' and you will find the below command:
+docker pull selenium/node-firefox:latest
+docker images
+Go to docker hub, search for 'selenium/node-edge' and you will find the below command:
+docker pull selenium/node-edge:latest
+docker images
+Now run the above hub and node containers using the commands provided here - Refer commands here
+docker run -d -p 4442-4444:4442-4444 --net grid --name selenium-hub selenium/hub:latest
+docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub --shm-size="2g" -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-chrome:latest
+docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub --shm-size="2g" -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-firefox:latest
+docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub --shm-size="2g" -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-edge:latest
+Check - http://localhost:4444
+Run the sample Cross Browser Selenium Automation Scripts on Docker containers using Selenium Grid
+Download Project from Here
+We can now stop everything after the usage of Grid is over, by executing the below commands:
+docker ps
+docker stop containerids of hub and nodes
+docker ps
+docker network rm grid
