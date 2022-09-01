@@ -4,6 +4,10 @@ Hub and Node - View Here
 Selenium Grid on Docker Containers
 We need to configure Hub and multiple Nodes as Docker Containers in a single machine, using the below commands
 docker network create grid 
+
+to close the existing grid  ---docker network rm grid
+to stop--- image is used by stopped ---docker system prune
+
 Refer commands here
 Go to docker hub, search for 'selenium/hub' and you will find the below command:
 docker pull selenium/hub:latest

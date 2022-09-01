@@ -1,8 +1,10 @@
 package com.Docker.Test;
 
+import java.net.MalformedURLException;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -15,7 +17,7 @@ public class TestingChromeBrowser extends BrowserFactory {
 	Properties prop;
 
 	@BeforeMethod
-	public void setup() {
+	public void setup() throws MalformedURLException {
 		prop = init_Properties();
 		driver = init_Browser("chrome");
 		driver.get(prop.getProperty("url"));
@@ -26,6 +28,8 @@ public class TestingChromeBrowser extends BrowserFactory {
 	public void testPageTitle() {
 
 		System.out.println(driver.getTitle() + " is for chrome");
+		String title=driver.getTitle();
+		Assert.assertEquals("Account Login", title);
 	}
 
 	@AfterMethod
