@@ -22,6 +22,7 @@ public class BrowserFactory {
 	DesiredCapabilities dc;
 	WebDriver driver;
 	Properties prop;
+	static ThreadLocal<WebDriver> tldriver = new ThreadLocal<WebDriver>();
 
 	public WebDriver init_Browser(String browserName) throws MalformedURLException {
 
@@ -32,7 +33,7 @@ public class BrowserFactory {
 
 				System.out.println("Running in local......");
 				WebDriverManager.chromedriver().setup();
-				driver = new ChromeDriver();
+				tldriver.set(new ChromeDriver());
 			}
 		} else if (browserName.equals("firefox")) {
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
@@ -42,7 +43,7 @@ public class BrowserFactory {
 			else {
 				System.out.println("Running in local.......");
 				WebDriverManager.firefoxdriver().setup();
-				driver = new FirefoxDriver();
+				tldriver.set(new FirefoxDriver());
 			}
 		} else if (browserName.equals("edge")) {
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
@@ -52,12 +53,16 @@ public class BrowserFactory {
 			else {
 				System.out.println("Running in local.......");
 				WebDriverManager.edgedriver().setup();
-				driver = new EdgeDriver();
+				tldriver.set(new EdgeDriver());
 			}
 		}
-		driver.manage().deleteAllCookies();
-		driver.manage().window().maximize();
+		getDriver().manage().deleteAllCookies();
+		getDriver().manage().window().maximize();
 		return driver;
+	}
+
+	public synchronized WebDriver getDriver() {
+		return tldriver.get();
 	}
 
 	private void init_RemoteDriver(String BrowserName) {
