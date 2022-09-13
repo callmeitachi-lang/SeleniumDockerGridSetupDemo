@@ -9,7 +9,6 @@ import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -22,12 +21,13 @@ public class BrowserFactory {
 	DesiredCapabilities dc;
 	WebDriver driver;
 	Properties prop;
-	static ThreadLocal<WebDriver> tldriver = new ThreadLocal<WebDriver>();
+	public static ThreadLocal<WebDriver> tldriver = new ThreadLocal<WebDriver>();
 
 	public WebDriver init_Browser(String browserName) throws MalformedURLException {
 
 		if (browserName.equals("chrome")) {
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				System.out.println("Running in remote.....");
 				init_RemoteDriver("chrome");
 			} else {
 
@@ -37,6 +37,8 @@ public class BrowserFactory {
 			}
 		} else if (browserName.equals("firefox")) {
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				System.out.println("Running in remote.....");
+
 				init_RemoteDriver("firefox");
 			}
 
@@ -46,6 +48,8 @@ public class BrowserFactory {
 				tldriver.set(new FirefoxDriver());
 			}
 		} else if (browserName.equals("edge")) {
+			System.out.println("Running in remote.....");
+
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				init_RemoteDriver("edge");
 			}

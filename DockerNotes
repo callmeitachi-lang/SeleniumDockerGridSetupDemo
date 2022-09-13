@@ -32,5 +32,6 @@ Download Project from Here
 We can now stop everything after the usage of Grid is over, by executing the below commands:
 docker ps
 docker stop containerids of hub and nodes
+docker image rm image_name to remove images 
 docker ps
 docker network rm grid
