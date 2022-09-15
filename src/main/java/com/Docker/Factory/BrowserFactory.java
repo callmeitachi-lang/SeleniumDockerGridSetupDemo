@@ -19,12 +19,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class BrowserFactory {
 
 	DesiredCapabilities dc;
-	WebDriver driver;
+	 WebDriver driver;
 	Properties prop;
 	public static ThreadLocal<WebDriver> tldriver = new ThreadLocal<WebDriver>();
 
-	public WebDriver init_Browser(String browserName) throws MalformedURLException {
+	public WebDriver init_Browser() throws MalformedURLException {
 
+		     String browserName=prop.getProperty("browser");
+		
 		if (browserName.equals("chrome")) {
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				System.out.println("Running in remote.....");
@@ -62,7 +64,8 @@ public class BrowserFactory {
 		}
 		getDriver().manage().deleteAllCookies();
 		getDriver().manage().window().maximize();
-		return driver;
+		getDriver().get(prop.getProperty("url"));
+		return getDriver();
 	}
 
 	public synchronized WebDriver getDriver() {
